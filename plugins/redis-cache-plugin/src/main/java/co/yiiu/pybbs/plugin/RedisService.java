@@ -1,8 +1,8 @@
-package co.yiiu.pybbs.plugin;
+package ru.kolyasnikovkv.discussion1c.plugin;
 
-import co.yiiu.pybbs.config.service.BaseService;
-import co.yiiu.pybbs.model.SystemConfig;
-import co.yiiu.pybbs.service.ISystemConfigService;
+import ru.kolyasnikovkv.discussion1c.config.service.BaseService;
+import ru.kolyasnikovkv.discussion1c.model.SystemConfig;
+import ru.kolyasnikovkv.discussion1c.service.ISystemConfigService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

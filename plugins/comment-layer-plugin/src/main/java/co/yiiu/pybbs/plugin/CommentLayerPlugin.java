@@ -1,6 +1,6 @@
-package co.yiiu.pybbs.plugin;
+package ru.kolyasnikovkv.discussion1c.plugin;
 
-import co.yiiu.pybbs.model.vo.CommentsByTopic;
+import ru.kolyasnikovkv.discussion1c.model.vo.CommentsByTopic;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,7 +18,7 @@ import java.util.List;
 @Aspect
 public class CommentLayerPlugin {
 
-  @Around("co.yiiu.pybbs.hook.CommentServiceHook.selectByTopicId()")
+  @Around("CommentServiceHook.selectByTopicId()")
   public Object selectByTopicId(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     List<CommentsByTopic> newComments =
         (List<CommentsByTopic>) proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());

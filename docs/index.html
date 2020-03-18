@@ -796,7 +796,7 @@ table.CodeRay td.code>pre{padding:0}
 <p>修改配置文件 <code>src/main/resources/application-dev.yml</code> 里的数据库相关配置</p>
 </li>
 <li>
-<p>找到`co.yiiu.pybbs.PybbsApplication`类，直接运行main方法即可启动</p>
+<p>找到`ru.kolyasnikovkv.discussion1c.PybbsApplication`类，直接运行main方法即可启动</p>
 </li>
 <li>
 <p>浏览器运行 <code>http://localhost:8080</code> , 后台地址 <code>http://localhost:8080/adminlogin</code> 后台用户名 admin 密码 123123</p>
@@ -920,7 +920,7 @@ table.CodeRay td.code>pre{padding:0}
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">co.yiiu.pybbs</span>;
+<pre class="CodeRay highlight"><code data-lang="java"><span class="keyword">package</span> <span class="namespace">ru.kolyasnikovkv.discussion1c</span>;
 
 <span class="keyword">import</span> <span class="include">org.springframework.boot.SpringApplication</span>;
 <span class="keyword">import</span> <span class="include">org.springframework.boot.autoconfigure.SpringBootApplication</span>;
@@ -2467,7 +2467,7 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sect2">
 <h3 id="获取token"><a class="anchor" href="#获取token"></a>获取token</h3>
 <div class="paragraph">
-<p><strong>系统默认开启了cors访问，任何源都可以访问 <code>/api/**</code> 下的资源，如果想关闭的话，可以通过修改源码的方式关闭，源码位置 <code>co.yiiu.pybbs.config.WebMvcConfig</code></strong></p>
+<p><strong>系统默认开启了cors访问，任何源都可以访问 <code>/api/**</code> 下的资源，如果想关闭的话，可以通过修改源码的方式关闭，源码位置 <code>ru.kolyasnikovkv.discussion1c.config.WebMvcConfig</code></strong></p>
 </div>
 <div class="paragraph">
 <p>有的接口请求要求带上用户的`token`参数，这个token是在用户注册的时候自动生成的，可以在个人设置页面重新生成</p>

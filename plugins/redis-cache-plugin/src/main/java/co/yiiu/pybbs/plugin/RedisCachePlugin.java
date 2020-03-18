@@ -1,12 +1,12 @@
-package co.yiiu.pybbs.plugin;
+package ru.kolyasnikovkv.discussion1c.plugin;
 
-import co.yiiu.pybbs.model.Comment;
-import co.yiiu.pybbs.model.Topic;
-import co.yiiu.pybbs.model.User;
-import co.yiiu.pybbs.model.vo.CommentsByTopic;
-import co.yiiu.pybbs.service.ISystemConfigService;
-import co.yiiu.pybbs.service.ITopicService;
-import co.yiiu.pybbs.util.JsonUtil;
+import ru.kolyasnikovkv.discussion1c.model.Comment;
+import ru.kolyasnikovkv.discussion1c.model.Topic;
+import ru.kolyasnikovkv.discussion1c.model.User;
+import ru.kolyasnikovkv.discussion1c.model.vo.CommentsByTopic;
+import ru.kolyasnikovkv.discussion1c.service.ISystemConfigService;
+import ru.kolyasnikovkv.discussion1c.service.ITopicService;
+import ru.kolyasnikovkv.discussion1c.util.JsonUtil;
 import com.alibaba.fastjson.TypeReference;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -36,7 +36,7 @@ public class RedisCachePlugin {
 
   // ---------- topic cache start ----------
 
-  @Around("co.yiiu.pybbs.hook.TopicServiceHook.selectById()")
+  @Around("TopicServiceHook.selectById()")
   public Object topicSelectById(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     String topicJson = redisService.getString(String.format(RedisKeys.REDIS_TOPIC_KEY, proceedingJoinPoint.getArgs()
         [0]));
@@ -51,7 +51,7 @@ public class RedisCachePlugin {
     }
   }
 
-  @Around("co.yiiu.pybbs.hook.TopicServiceHook.updateViewCount()")
+  @Around("TopicServiceHook.updateViewCount()")
   public Object topicUpdateViewCount(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     Topic topic = (Topic) proceedingJoinPoint.getArgs()[0];
     String ip = (String) proceedingJoinPoint.getArgs()[1];
@@ -70,7 +70,7 @@ public class RedisCachePlugin {
     }
   }
 
-  @After("co.yiiu.pybbs.hook.TopicServiceHook.update()")
+  @After("TopicServiceHook.update()")
   public void topicUpdate(JoinPoint joinPoint) {
     Topic topic = (Topic) joinPoint.getArgs()[0];
     // 缓存到redis里
@@ -81,7 +81,7 @@ public class RedisCachePlugin {
 
   // ---------- comment cache start ----------
 
-  @Around("co.yiiu.pybbs.hook.CommentServiceHook.selectByTopicId()")
+  @Around("CommentServiceHook.selectByTopicId()")
   public Object commentSelectByTopicId(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     Integer topicId = (Integer) proceedingJoinPoint.getArgs()[0];
     String commentsJson = redisService.getString(String.format(RedisKeys.REDIS_COMMENTS_KEY, topicId));
@@ -96,19 +96,19 @@ public class RedisCachePlugin {
     }
   }
 
-  @After("co.yiiu.pybbs.hook.CommentServiceHook.insert()")
+  @After("CommentServiceHook.insert()")
   public void commentInsert(JoinPoint joinPoint) {
     Comment comment = (Comment) joinPoint.getArgs()[0];
     redisService.delString(String.format(RedisKeys.REDIS_COMMENTS_KEY, comment.getTopicId()));
   }
 
-  @After("co.yiiu.pybbs.hook.CommentServiceHook.update()")
+  @After("CommentServiceHook.update()")
   public void commentUpdate(JoinPoint joinPoint) {
     Comment comment = (Comment) joinPoint.getArgs()[0];
     redisService.delString(String.format(RedisKeys.REDIS_COMMENTS_KEY, comment.getTopicId()));
   }
 
-  @After("co.yiiu.pybbs.hook.CommentServiceHook.delete()")
+  @After("CommentServiceHook.delete()")
   public void commentDelete(JoinPoint joinPoint) {
     Comment comment = (Comment) joinPoint.getArgs()[0];
     redisService.delString(String.format(RedisKeys.REDIS_COMMENTS_KEY, comment.getTopicId()));
@@ -118,7 +118,7 @@ public class RedisCachePlugin {
 
   // ---------- user cache start ----------
 
-  @Around("co.yiiu.pybbs.hook.UserServiceHook.selectByUsername()")
+  @Around("UserServiceHook.selectByUsername()")
   public Object userSelectByUsername(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     String username = (String) proceedingJoinPoint.getArgs()[0];
     String userJson = redisService.getString(String.format(RedisKeys.REDIS_USER_USERNAME_KEY, username));
@@ -133,7 +133,7 @@ public class RedisCachePlugin {
     }
   }
 
-  @Around("co.yiiu.pybbs.hook.UserServiceHook.selectByEmail()")
+  @Around("UserServiceHook.selectByEmail()")
   public Object userSelectByEmail(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     String email = (String) proceedingJoinPoint.getArgs()[0];
     String userJson = redisService.getString(String.format(RedisKeys.REDIS_USER_EMAIL_KEY, email));
@@ -147,7 +147,7 @@ public class RedisCachePlugin {
     }
   }
 
-  @Around("co.yiiu.pybbs.hook.UserServiceHook.selectByMobile()")
+  @Around("UserServiceHook.selectByMobile()")
   public Object userSelectByMobile(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     String mobile = (String) proceedingJoinPoint.getArgs()[0];
     String userJson = redisService.getString(String.format(RedisKeys.REDIS_USER_MOBILE_KEY, mobile));
@@ -162,7 +162,7 @@ public class RedisCachePlugin {
     }
   }
 
-  @Around("co.yiiu.pybbs.hook.UserServiceHook.selectByToken()")
+  @Around("UserServiceHook.selectByToken()")
   public Object userSelectByToken(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     String token = (String) proceedingJoinPoint.getArgs()[0];
     String userJson = redisService.getString(String.format(RedisKeys.REDIS_USER_TOKEN_KEY, token));
@@ -176,7 +176,7 @@ public class RedisCachePlugin {
     }
   }
 
-  @Around("co.yiiu.pybbs.hook.UserServiceHook.selectById()")
+  @Around("UserServiceHook.selectById()")
   public Object userSelectById(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
     Integer id = (Integer) proceedingJoinPoint.getArgs()[0];
     String userJson = redisService.getString(String.format(RedisKeys.REDIS_USER_ID_KEY, id));
@@ -190,7 +190,7 @@ public class RedisCachePlugin {
     }
   }
 
-  @After("co.yiiu.pybbs.hook.UserServiceHook.delRedisUser()")
+  @After("UserServiceHook.delRedisUser()")
   public void userDelRedisUser(JoinPoint joinPoint) {
     User user = (User) joinPoint.getArgs()[0];
     redisService.delString(String.format(RedisKeys.REDIS_USER_ID_KEY, user.getId()));

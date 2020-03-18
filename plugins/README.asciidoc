@@ -55,7 +55,7 @@ mvn clean package
 
 1. 插件名要以 `-plugin` 结尾，如 `xxx-plugin`，例如 `redis-cache-plugin`
 2. 如果是主题插件，要以 `theme` 开头，以 `-plugin` 结尾，例如 `theme-simple-plugin`
-3. 插件包名必须为 `co.yiiu.pybbs.plugin` （主题插件除外）
+3. 插件包名必须为 `ru.kolyasnikovkv.discussion1c.plugin` （主题插件除外）
 4. 插件打包必须要使用jdk8编译
 5. 附上插件说明，越详细越好
 
